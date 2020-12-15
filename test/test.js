@@ -7,21 +7,27 @@ const code = fs.readFileSync('index.js', 'utf8');
 
 describe('', function () {
   it('', function() {
-    let structure = function() {
-      drawName($text)
+    // Initial structure. Learner code not match this.
+    let structureShouldNotMatch = function() {
+      red = [0, 100, 63]
+      orange = [40, 100, 60]
+      green = [75, 100, 40]
+      blue = [196, 77, 55]
+      purple = [280, 50, 60]
     };
+    
+    // Final structure--retain color variables but allow for other color possibilities in letterColors
+    let structureShouldMatch = function() {
+      red = [$num1, $num2, $num3]
+      orange = [$num4, $num5, $num6]
+      green = [$num7, $num8, $num9]
+      blue = [$num10, $num11, $num12]
+      purple = [$num13, $num14, $num15]
+    }
 
-    let varCallbacks = [
-      function($text) {
-        if ($text.value === 'Enter your name here') {
-          return {failure: 'Did you change `Enter your name here` to your own name?'};
-        }
-        return true;
-      }
-    ];
-
-    let isMatch = Structured.match(code, structure, {varCallbacks: varCallbacks});
-    let failureMessage = varCallbacks.failure || 'Did you enter your own name in `\'\'` inside `drawName()`?';
-    assert.isOk(isMatch, failureMessage);
+    let shouldNotMatch = Structured.match(code, structureShouldNotMatch);
+    let shouldMatch = Structured.match(code, structureShouldMatch)
+    let failureMessage = 'Did you change any of the values in the color variables?';
+    assert.isOk(!shouldNotMatch && shouldMatch, failureMessage);
   });
 });
